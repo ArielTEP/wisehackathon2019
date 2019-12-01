@@ -1,3 +1,5 @@
 {
-    "python.pythonPath": "C:\\Users\\aespindo\\AppData\\Local\\Programs\\Python\\Python37-32\\python3.exe"
+    "python.pythonPath": "/Users/sarifern/scratch/wisehackathon2019/env/bin/python3",
+    "git.ignoreLimitWarning": true,
+    "python.formatting.provider": "black"
 }

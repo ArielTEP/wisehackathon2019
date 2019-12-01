@@ -25,7 +25,7 @@ SECRET_KEY = '4p76oj$c=mm-^2i5u0fjzoaie_33hfvj67stq!5_vjn@r5j@8i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['d91b4970.ngrok.io']
+ALLOWED_HOSTS = ['7f6c19cc.ngrok.io','127.0.0.1']
 
 
 # Application definition
@@ -127,4 +127,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
-STATIC_URL = '/static/'
+#static files remain with app
+STATIC_URL = '/static/'  
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

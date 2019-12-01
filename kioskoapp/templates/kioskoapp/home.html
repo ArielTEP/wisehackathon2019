@@ -1,0 +1,71 @@
+{% extends 'kioskoapp/base.html' %} {% block content %}
+<div ng-app="appMaps" class="container">
+
+    <div id="map_canvas" ng-controller="mainCtrl" class="row">
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkBQ6QARQGWvhqw0nhLWLdkScP7mks4dc"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.1/lodash.js" type="text/javascript"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-simple-logger/0.1.7/angular-simple-logger.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-google-maps/2.4.1/angular-google-maps.min.js"></script>
+        <script type="text/javascript">
+            LocFac = "/record/api/";
+
+            angular.module('appMaps', ['uiGmapgoogle-maps'])
+                .config(function($interpolateProvider) {
+                    $interpolateProvider.startSymbol('[');
+                    $interpolateProvider.endSymbol(']');
+                })
+                .controller('mainCtrl', function($scope, $http, uiGmapGoogleMapApi, uiGmapIsReady) {
+                    $scope.map = {
+                        zoom: 14,
+                        bounds: {},
+                        center: {
+                            latitude: 19.372475,
+                            longitude: -99.180617
+                        }
+                    };
+
+                    $scope.markers = [];
+
+                    $http.get(LocFac).then(function(data) {
+                        var markers = data.data;
+                        angular.forEach(markers, function(marker) {
+
+                            marker.coords = {
+                                latitude: marker.latitude,
+                                longitude: marker.longitude
+                            }
+                        })
+                        $scope.markers = markers;
+                    });
+                });
+        </script>
+
+        <style>
+            .angular-google-map-container {
+                height: 500px;
+                width: auto;
+            }
+        </style>
+
+        <br/><br/>
+        <ui-gmap-google-map center="map.center" zoom="map.zoom" options="map.options">
+            <ui-gmap-marker ng-repeat="marker in markers" coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
+                <ui-gmap-window>
+                    <div id="infowindow">
+                        <h4>[ marker.text ]</h4>
+                        <h5>[ marker.location ]</h5>
+
+                        <h2>CAPACIDAD ACTUAL</h2>
+                        <h2>[ marker.capacidad ]%</h2>
+                    </div>
+                </ui-gmap-window>
+            </ui-gmap-marker>
+
+        </ui-gmap-google-map>
+    </div>
+</div>
+
+<!--modal to add a new location-->
+
+{% endblock %}

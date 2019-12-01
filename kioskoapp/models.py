@@ -54,6 +54,14 @@ class Dose(models.Model):
         return "{0}:{1}:{2}".format(self.id_dose,0,0)
 
 
+class Record(models.Model):
+	capacidad = models.IntegerField(default=0)
+	location = models.CharField(max_length=100)
+	text = models.CharField(max_length=500)
+	created = models.DateTimeField(auto_now_add=True)
+	updated = models.DateTimeField(auto_now=True)
+	latitude = models.DecimalField(max_digits=9, decimal_places=6, default=None)
+	longitude = models.DecimalField(max_digits=9, decimal_places=6, default=None)
 
 
 
